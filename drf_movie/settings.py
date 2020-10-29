@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'rest_framework.authtoken',
     'djoser',
-
+    'drf_yasg',
     'django_filters',
 
     'core',

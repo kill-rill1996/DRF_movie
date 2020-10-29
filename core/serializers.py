@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Movie, Review
+from .models import Movie, Review, Rating
 
 
 class MovieListSerializer(serializers.ModelSerializer):
@@ -54,3 +54,17 @@ class MovieDetailSerializer(serializers.ModelSerializer):
         model = Movie
         exclude = ('draft',)
 
+
+class CreateRatingSerializer(serializers.ModelSerializer):
+    """Добавение рейтинга фильму"""
+    class Meta:
+        model = Rating
+        fields = ('movie', 'star')
+
+    def create(self, validated_data):
+        rating = Rating.objects.update_or_create(
+            ip=validated_data.get('ip', None),
+            movie=validated_data.get('movie', None),
+            defaults={'star': validated_data.get('star')}
+        )
+        return rating
